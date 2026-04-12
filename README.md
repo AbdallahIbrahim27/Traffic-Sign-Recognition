@@ -138,4 +138,4 @@ python src/predict.py --model outputs/custom_cnn_best.keras --image my_sign.jpg
 
 *Dataset: [GTSRB on Kaggle](https://www.kaggle.com/datasets/meowmeowmeowmeowmeow/gtsrb-german-traffic-sign)*
 
-## Made By Abdullah
+## Made By Abdullah Ibrahim 
