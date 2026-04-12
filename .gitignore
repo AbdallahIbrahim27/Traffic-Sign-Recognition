@@ -1,0 +1,85 @@
+# =========================
+# Python cache
+# =========================
+__pycache__/
+*.py[cod]
+*$py.class
+
+# =========================
+# Virtual Environment
+# =========================
+env/
+venv/
+ENV/
+.venv/
+
+# =========================
+# Jupyter Notebook
+# =========================
+.ipynb_checkpoints/
+
+# =========================
+# IDE / Editor
+# =========================
+.vscode/
+.idea/
+
+# =========================
+# OS files
+# =========================
+.DS_Store
+Thumbs.db
+
+# =========================
+# Project outputs (IGNORE generated results)
+# =========================
+outputs/
+runs/
+logs/
+results/
+
+# =========================
+# Data (usually large / local only)
+# =========================
+data/
+*.csv
+*.zip
+*.tar
+*.gz
+
+# =========================
+# Model files (optional but recommended)
+# =========================
+*.h5
+*.hdf5
+*.pt
+*.pth
+*.onnx
+*.pkl
+*.joblib
+
+# =========================
+# Environment variables
+# =========================
+.env
+
+# =========================
+# TensorFlow / Keras
+# =========================
+
+
+# =========================
+# ML experiment tracking
+# =========================
+mlruns/
+
+# =========================
+# Logs / metrics
+# =========================
+metrics.json
+*.log
+
+# =========================
+# Cache folders
+# =========================
+.cache/
