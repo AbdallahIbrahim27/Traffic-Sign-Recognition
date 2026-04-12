@@ -173,7 +173,7 @@ hr { border-color: var(--border); }
 def load_model():
     try:
         import tensorflow as tf
-        path = Path("outputs/custom_cnn_best.keras")
+        path = Path("models/custom_cnn_best.keras")
 
         if not path.exists():
             return None, f"Model file not found: `{path}`"
