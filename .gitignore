@@ -33,7 +33,6 @@ Thumbs.db
 # =========================
 # Project outputs (IGNORE generated results)
 # =========================
-outputs/
 runs/
 logs/
 results/
