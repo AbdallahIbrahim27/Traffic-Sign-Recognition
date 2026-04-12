@@ -47,11 +47,23 @@ CLASS_ICONS = {
     "Roundabout": "🔄", "End": "✅", "Beware": "🌨️", "Double curve": "〰️",
 }
 
-def get_icon(class_name):
+# ─── SINGLE definition of get_icon ────────────────────────────────────────────
+def get_icon(class_name: str) -> str:
     for key, icon in CLASS_ICONS.items():
         if key.lower() in class_name.lower():
             return icon
     return "🚸"
+
+
+def get_category(name: str) -> str:
+    if "Speed" in name:
+        return "Speed Regulation"
+    if "Stop" in name or "Yield" in name:
+        return "Priority"
+    if "No" in name:
+        return "Prohibition"
+    return "Other"
+
 
 # ─── CSS ──────────────────────────────────────────────────────────────────────
 st.markdown("""
@@ -193,23 +205,6 @@ def preprocess_image(img: Image.Image, size=(32, 32)):
     return np.expand_dims(arr, axis=0)
 
 
-def get_icon(class_name: str) -> str:
-    for k, v in CLASS_ICONS.items():
-        if k.lower() in class_name.lower():
-            return v
-    return "🚸"
-
-
-def get_category(name: str) -> str:
-    if "Speed" in name:
-        return "Speed Regulation"
-    if "Stop" in name or "Yield" in name:
-        return "Priority"
-    if "No" in name:
-        return "Prohibition"
-    return "Other"
-
-
 # ─── Sidebar ──────────────────────────────────────────────────────────────────
 with st.sidebar:
     st.markdown("### 🚦 TrafficLens")
@@ -222,8 +217,8 @@ with st.sidebar:
 
         m = metrics.get("custom_cnn", {})
         if m:
-            st.metric("Val Accuracy", f"{m.get('accuracy',0)*100:.1f}%")
-            st.metric("Val Loss", f"{m.get('loss',0):.4f}")
+            st.metric("Val Accuracy", f"{m.get('accuracy', 0) * 100:.1f}%")
+            st.metric("Val Loss", f"{m.get('loss', 0):.4f}")
 
     st.markdown("---")
     st.markdown("GTSRB Dataset · 43 Classes")
@@ -277,7 +272,17 @@ with st.spinner("Predicting..."):
 best_idx = int(np.argmax(preds))
 best_prob = float(preds[best_idx])
 
+# ─── Safe decode with None guard ──────────────────────────────────────────────
 class_id = decode_prediction_index(best_idx)
+
+if class_id is None:
+    st.error(f"Could not decode prediction index: {best_idx}. Check your class mapping.")
+    st.stop()
+
+if class_id < 0 or class_id >= len(CLASS_NAMES):
+    st.error(f"Decoded class_id={class_id} is out of range (0–{len(CLASS_NAMES)-1}).")
+    st.stop()
+
 class_name = CLASS_NAMES[class_id]
 icon = get_icon(class_name)
 category = get_category(class_name)
@@ -287,9 +292,9 @@ st.markdown(f"""
     <div style="font-size:2rem">{icon}</div>
     <div class="result-name">{class_name}</div>
     <div>{category}</div>
-    <div class="result-confidence">{best_prob*100:.2f}%</div>
+    <div class="result-confidence">{best_prob * 100:.2f}%</div>
     <div class="conf-bar-bg">
-        <div class="conf-bar-fill" style="width:{best_prob*100}%"></div>
+        <div class="conf-bar-fill" style="width:{best_prob * 100}%"></div>
     </div>
 </div>
 """, unsafe_allow_html=True)
