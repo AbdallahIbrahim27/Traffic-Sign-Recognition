@@ -261,7 +261,7 @@ if not uploaded:
     st.stop()
 
 img = Image.open(uploaded)
-st.image(img, use_container_width=True)
+st.image(img, width=250)
 
 # ─── Prediction ───────────────────────────────────────────────────────────────
 inp = preprocess_image(img)
